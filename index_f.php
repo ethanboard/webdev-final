@@ -5,10 +5,10 @@ $user = 'ethan';
 $pass = '308NegraArroyo';
 
 $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
-$stmt = $pdo->query('SELECT * FROM data');
+$stmt = $pdo->query('SELECT * FROM shoes');
 $data = $stmt->fetchAll();
 
-$countStmt = $pdo->query('SELECT COUNT(*) AS total FROM data');
+$countStmt = $pdo->query('SELECT COUNT(*) AS total FROM shoes');
 $totalShoes = $countStmt->fetch()['total'];
 ?>
 <!DOCTYPE html>
@@ -16,6 +16,7 @@ $totalShoes = $countStmt->fetch()['total'];
 <head>
     <meta charset="UTF-8">
     <title>Running Shoes</title>
+    <link rel="stylesheet" href="styles_f.php">
 </head>
 <body>
     <h1>Running Shoes Inventory</h1>
