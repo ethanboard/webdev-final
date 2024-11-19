@@ -7,10 +7,9 @@ body {
     padding: 20px;
 }
 
-/* Add a wrapper for the table for better layout control */
 .table-container {
     width: 100%;
-    overflow: hidden;  /* Contains the floated elements */
+    overflow: hidden;
     margin-bottom: 40px;
 }
 
@@ -28,14 +27,13 @@ th, td {
 
 .half-width-left-align {
     width: 50%;
-    float: none;  /* Explicitly remove float */
+    float: none;
 }
 
-/* Create a clear break in the layout */
 .form-container {
     width: 100%;
-    clear: both;  /* Forces this below floated elements */
-    display: block;  /* Ensures block-level display */
+    clear: both;
+    display: block;
 }
 
 form {
@@ -93,18 +91,10 @@ h1, h2 {
     margin-bottom: 15px;
 }
 
-.table-container {
-    margin-top: 40px;
-}
-
-.form-container {
-    margin-top: 40px;
-}
-
 .hero-section {
     background-color: #fff;
     padding: 40px 20px;
-    margin: -20px -20px 40px -20px; /* Negative margin to stretch full width */
+    margin: -20px -20px 40px -20px;
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
@@ -131,9 +121,10 @@ h1, h2 {
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-/* Rest of your existing styles remain unchanged */
 .table-container {
-    width: 100%;
-    overflow: hidden;
-    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+.form-container {
+    margin-top: 40px;
 }
