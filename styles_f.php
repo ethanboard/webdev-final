@@ -90,7 +90,7 @@ body {
 
 /* Button Styles */
 button {
-    background-color: #4CAF50;
+    background-color: #FF6F61;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -101,7 +101,7 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #FF6F61;
 }
 
 table {
