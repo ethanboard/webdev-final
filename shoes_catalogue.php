@@ -1,3 +1,4 @@
+<?php include 'navbar.php'; ?>
 <?php
 // Connect to the database
 $pdo = new PDO("mysql:host=localhost;dbname=shoes", "root", "mysql");

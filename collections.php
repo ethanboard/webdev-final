@@ -1,90 +1,73 @@
 <?php include 'navbar.php'; ?>
+<link rel="stylesheet" href="styles_f.php">
+
 <?php
-$pdo = new PDO("mysql:host=localhost;dbname=shoes", "root", "mysql");
+$conn = new mysqli("localhost", "root", "mysql", "shoes");
 
-// Fetch all users and shoes
-$users = $pdo->query("SELECT * FROM users")->fetchAll();
-$shoes = $pdo->query("SELECT * FROM shoes")->fetchAll();
+// Fetch all users
+$users_query = "SELECT user_id, user_name FROM users";
+$users_result = $conn->query($users_query);
 
-// Handle adding a shoe to a user's collection
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['add_shoe'])) {
-        $userId = $_POST['user_id'];
-        $shoeId = $_POST['shoe_id'];
-
-        $stmt = $pdo->prepare("INSERT INTO user_collections (user_id, shoe_id) VALUES (?, ?)");
-        $stmt->execute([$userId, $shoeId]);
-    } elseif (isset($_POST['update_mileage'])) {
-        $collectionId = $_POST['collection_id'];
-        $mileage = $_POST['mileage'];
-
-        $stmt = $pdo->prepare("UPDATE user_collections SET mileage = ? WHERE collection_id = ?");
-        $stmt->execute([$mileage, $collectionId]);
-    }
-}
-
-// Fetch all user collections
-$collections = $pdo->query("
-    SELECT uc.collection_id, u.user_name, s.shoe_name, uc.mileage 
-    FROM user_collections uc
-    JOIN users u ON uc.user_id = u.user_id
-    JOIN shoes s ON uc.shoe_id = s.entry_id
-")->fetchAll();
+// Fetch all shoe names
+$shoe_names_query = "SELECT DISTINCT shoe_name FROM shoes";
+$shoe_names_result = $conn->query($shoe_names_query);
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shoe Collections</title>
-</head>
-<body>
-    <h1>Shoe Collections</h1>
+<div class="container">
+    <h1>Manage Collections</h1>
 
-    <!-- Add Shoe to User Collection -->
-    <h2>Add Shoe to Collection</h2>
-    <form method="POST">
-        <label for="user_id">User:</label>
+    <!-- Form to Select User and Shoe -->
+    <form method="POST" action="add_to_collection.php">
+        <label for="user_id">Select User:</label>
         <select name="user_id" id="user_id" required>
-            <?php foreach ($users as $user): ?>
-            <option value="<?php echo $user['user_id']; ?>"><?php echo htmlspecialchars($user['user_name']); ?></option>
-            <?php endforeach; ?>
+            <option value="">-- Select User --</option>
+            <?php
+            while ($row = $users_result->fetch_assoc()) {
+                echo "<option value='" . $row['user_id'] . "'>" . $row['user_name'] . "</option>";
+            }
+            ?>
         </select>
-        <br>
-        <label for="shoe_id">Shoe:</label>
-        <select name="shoe_id" id="shoe_id" required>
-            <?php foreach ($shoes as $shoe): ?>
-            <option value="<?php echo $shoe['entry_id']; ?>"><?php echo htmlspecialchars($shoe['shoe_name']); ?></option>
-            <?php endforeach; ?>
-        </select>
-        <br>
-        <button type="submit" name="add_shoe">Add Shoe</button>
-    </form>
 
-    <!-- User Collections -->
-    <h2>All Collections</h2>
-    <table border="1">
-        <tr>
-            <th>User</th>
-            <th>Shoe</th>
-            <th>Mileage</th>
-            <th>Action</th>
-        </tr>
-        <?php foreach ($collections as $collection): ?>
-        <tr>
-            <td><?php echo htmlspecialchars($collection['user_name']); ?></td>
-            <td><?php echo htmlspecialchars($collection['shoe_name']); ?></td>
-            <td><?php echo htmlspecialchars($collection['mileage']); ?></td>
-            <td>
-                <form method="POST" style="display:inline;">
-                    <input type="hidden" name="collection_id" value="<?php echo $collection['collection_id']; ?>">
-                    <input type="number" name="mileage" step="0.1" placeholder="New Mileage" required>
-                    <button type="submit" name="update_mileage">Update Mileage</button>
-                </form>
-            </td>
-        </tr>
-        <?php endforeach; ?>
-    </table>
-</body>
-</html>
+        <label for="shoe_name">Select Shoe:</label>
+        <select name="shoe_name" id="shoe_name" required>
+            <option value="">-- Select Shoe --</option>
+            <?php
+            while ($row = $shoe_names_result->fetch_assoc()) {
+                echo "<option value='" . $row['shoe_name'] . "'>" . $row['shoe_name'] . "</option>";
+            }
+            ?>
+        </select>
+
+        <!-- Populate models dynamically via JavaScript -->
+        <label for="shoe_model">Select Model:</label>
+        <select name="shoe_model" id="shoe_model" required>
+            <option value="">-- Select Model --</option>
+        </select>
+
+        <button type="submit">Add to Collection</button>
+    </form>
+</div>
+
+<script>
+    // Fetch shoe models dynamically based on the selected shoe name
+    document.getElementById('shoe_name').addEventListener('change', function () {
+        const shoeName = this.value;
+        const shoeModelDropdown = document.getElementById('shoe_model');
+
+        // Clear existing options
+        shoeModelDropdown.innerHTML = '<option value="">-- Select Model --</option>';
+
+        if (shoeName) {
+            fetch(`get_shoe_models.php?shoe_name=${shoeName}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(model => {
+                        const option = document.createElement('option');
+                        option.value = model.entry_id; // Correctly map `entry_id`
+                        option.textContent = `Model ${model.shoe_model}`;
+                        shoeModelDropdown.appendChild(option);
+                    });
+                });
+        }
+    });
+</script>

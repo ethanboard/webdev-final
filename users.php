@@ -1,4 +1,5 @@
 <?php include 'navbar.php'; ?>
+<link rel="stylesheet" href="styles_f.php">
 <?php
 $pdo = new PDO("mysql:host=localhost;dbname=shoes", "root", "mysql");
 
@@ -31,6 +32,7 @@ $users = $pdo->query("SELECT * FROM users")->fetchAll();
     <title>User Management</title>
 </head>
 <body>
+<div class="container">
     <h1>User Management</h1>
 
     <!-- Add User Form -->
@@ -68,5 +70,6 @@ $users = $pdo->query("SELECT * FROM users")->fetchAll();
         </tr>
         <?php endforeach; ?>
     </table>
+    </div>
 </body>
 </html>
