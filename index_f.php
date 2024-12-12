@@ -1,41 +1,33 @@
-<?php
-$host = 'localhost';
-$dbname = 'shoes';
-$user = 'ethan';
-$pass = '308NegraArroyo';
-
-$pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
-$stmt = $pdo->query('SELECT * FROM shoes');
-$data = $stmt->fetchAll();
-
-$countStmt = $pdo->query('SELECT COUNT(*) AS total FROM shoes');
-$totalShoes = $countStmt->fetch()['total'];
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Running Shoes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles_f.php">
+    <title>Shoe Catalogue</title>
 </head>
 <body>
-    <h1>Running Shoes Inventory</h1>
-    <p>Total Shoes in Inventory: <?php echo $totalShoes; ?></p>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Brand</th>
-            <th>Model</th>
-        </tr>
-        <?php foreach ($data as $row): ?>
-        <tr>
-            <td><?php echo htmlspecialchars($row['entry_id']); ?></td>
-            <td><?php echo htmlspecialchars($row['shoe_name']); ?></td>
-            <td><?php echo htmlspecialchars($row['shoe_brand']); ?></td>
-            <td><?php echo htmlspecialchars($row['shoe_model']); ?></td>
-        </tr>
-        <?php endforeach; ?>
-    </table>
+    <!-- Hero Section -->
+    <header class="hero">
+        <h1>Welcome to ShoeTracker</h1>
+        <p>Track your shoes, mileage, and performance.</p>
+        <a href="login.php" class="cta">Get Started</a>
+    </header>
+
+    <section class="layout">
+        <div class="row flexbox">
+            <div class="column">
+                <h2>Discover Shoes</h2>
+                <p>Explore our catalogue of the latest and best running shoes.</p>
+            </div>
+            <div class="column">
+                <img src="351shoes_column.jpg" alt="Shoes">
+            </div>
+        </div>
+        <div class="row">
+            <h2>Track Your Mileage</h2>
+            <p>Maintain your shoe collection and stay on top of performance.</p>
+        </div>
+    </section>
 </body>
 </html>
