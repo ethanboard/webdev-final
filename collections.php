@@ -14,7 +14,7 @@ $shoe_names_result = $conn->query($shoe_names_query);
 ?>
 
 <div class="container">
-    <h1>Manage Collections</h1>
+    <h1>Add Shoes to Collection!</h1>
 
     <!-- Form to Select User and Shoe -->
     <form method="POST" action="add_to_collection.php">

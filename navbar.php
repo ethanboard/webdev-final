@@ -8,7 +8,7 @@
         <ul style="list-style: none; display: flex; justify-content: space-around; margin: 0; padding: 0;">
             <li><a href="index_f.php" style="color: white; text-decoration: none;">Home</a></li>
             <li><a href="users.php" style="color: white; text-decoration: none;">Manage Users</a></li>
-            <li><a href="collections.php" style="color: white; text-decoration: none;">Manage Shoe Collections</a></li>
+            <li><a href="collections.php" style="color: white; text-decoration: none;">Add Shoes</a></li>
             <li><a href="shoes_catalogue.php" style="color: white; text-decoration: none;">Shoe Catalog</a></li>
         </ul>
     </nav>

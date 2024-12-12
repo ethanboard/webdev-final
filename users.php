@@ -55,6 +55,7 @@ $users = $pdo->query("SELECT * FROM users")->fetchAll();
             <th>Name</th>
             <th>Email</th>
             <th>Action</th>
+            <th>View Collection</th>
         </tr>
         <?php foreach ($users as $user): ?>
         <tr>
@@ -67,9 +68,13 @@ $users = $pdo->query("SELECT * FROM users")->fetchAll();
                     <button type="submit" name="delete_user">Delete</button>
                 </form>
             </td>
+            <td>
+                <!-- Button to view user's individual collection -->
+                <a href="view_user_collection.php?user_id=<?php echo $user['user_id']; ?>" class="btn">View Collection</a>
+            </td>
         </tr>
         <?php endforeach; ?>
     </table>
-    </div>
+</div>
 </body>
 </html>
